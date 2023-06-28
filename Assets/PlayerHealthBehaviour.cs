@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerHealthBehaviour : MonoBehaviour
 {
 
-    [SerializeField] float health = 100f;
+    [SerializeField] public static float health = 100f;
+    // Should probably be in the enemy gameObject?
+    [SerializeField] float damageTaken = 10f;
 
     SpriteRenderer spriteRenderer;
 
@@ -19,6 +21,7 @@ public class PlayerHealthBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             StartCoroutine(flashDamage());
+            PlayerHealthBehaviour.health -= damageTaken;
         }
     }
 
