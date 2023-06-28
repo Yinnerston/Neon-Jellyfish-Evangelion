@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fin
+  - Bullet
+  - Enemy
+  - Obstacle
+  - Speed
   layers:
   - Default
   - TransparentFX
