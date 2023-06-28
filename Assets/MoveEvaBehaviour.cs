@@ -13,4 +13,12 @@ public class MoveEvaBehaviour : MonoBehaviour
         transform.Rotate(0, 0, evaRotationSpeed * Time.deltaTime);
         transform.Translate(0, evaSpeed * Time.deltaTime, 0);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Bullet")
+        {
+            Destroy(gameObject);
+        }
+    }
 }
