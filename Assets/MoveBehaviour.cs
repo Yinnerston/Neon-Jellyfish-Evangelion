@@ -7,6 +7,8 @@ public class MoveBehaviour : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float steerSpeed = 109f;
     [SerializeField] float boostSpeed = 25f;
+    [SerializeField] float slowSpeed = 5f;
+
     private float curSpeed;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,28 @@ public class MoveBehaviour : MonoBehaviour
         transform.Translate(0, moveAmount, 0);
     }
 
+    private IEnumerator returnSpeedToNormal()
+    {
+        yield return new WaitForSeconds(2f);
+        curSpeed = moveSpeed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Obstacle")
+        {
+            curSpeed = slowSpeed;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Obstacle")
+        {
+            StartCoroutine(returnSpeedToNormal());
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Speed")
@@ -36,7 +60,8 @@ public class MoveBehaviour : MonoBehaviour
     {
         if (collision.tag == "Speed")
         {
-            curSpeed = moveSpeed;
+            StartCoroutine(returnSpeedToNormal());
         }
+        
     }
 }
